@@ -1,33 +1,53 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import {RadioButton} from 'react-native-paper';
-import { data } from '../../utils/data';
+import {data} from '../../utils/data';
 
 const Quiz = ({navigation}: any) => {
-   const [question, setQuestion] = useState(1);
- 
-  
- function getRandomQuestion () {
-    question.push()
+  const [randomQuestion, setRandomQuestion] = useState([]);
+  const [displayQues, setDisplayQues] = useState(0);
 
-    const RandomNumber = Math.floor.random (1, data.length)
+  useEffect(() => {
+    getRandomQuestion(data);
+  }, []);
 
- }
- 
+  const getRandomQuestion = (data: any) => {
+    console.log('DATA ===>', data);
+    const filter: any = data.sort(() => 0.5 - Math.random());
+
+    console.log('Filter ===>', filter);
+    setRandomQuestion(filter);
+  };
+
+  const handleQuesChange = () => {
+    if (displayQues < randomQuestion.length - 1) {
+      setDisplayQues(displayQues + 1);
+    } else {
+      setDisplayQues(0);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Question</Text>
       <View style={styles.boxforquestion}>
-        <Text style={styles.question}>Props are immutable?</Text>
+        <Text style={styles.question}>
+          {randomQuestion[displayQues] && randomQuestion[displayQues].question}
+        </Text>
       </View>
-      <TouchableOpacity style={styles.button} onPress={getRandomQuestion(()=>)}>
-      <Text style={styles.buttonText}>Change</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => handleQuesChange()}>
+        <Text style={styles.buttonText}>Change</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
         <Text
           style={styles.buttonText}
-          onPress={() => navigation.navigate('TimeUp')}>
+          onPress={() =>
+            navigation.navigate('TimeUp', {
+              data: randomQuestion[displayQues],
+            })
+          }>
           Next
         </Text>
       </TouchableOpacity>
@@ -38,11 +58,11 @@ const Quiz = ({navigation}: any) => {
 export default Quiz;
 
 const styles = StyleSheet.create({
-   container: {
-      backgroundColor: '#b8e5ea',
-      width: '100%',
-      height: '100%',
-    },
+  container: {
+    backgroundColor: '#b8e5ea',
+    width: '100%',
+    height: '100%',
+  },
   heading: {
     color: '#000000',
     textAlign: 'center',
@@ -54,7 +74,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: "20%",
+    marginHorizontal: '20%',
     fontFamily: 'regular',
     fontSize: 18,
     backgroundColor: '#40a420',
@@ -70,7 +90,8 @@ const styles = StyleSheet.create({
   },
   question: {
     color: '#000000',
-    marginHorizontal: 10,
+    marginHorizontal: '10%',
+    fontSize: 17,
   },
   boxforradio: {
     marginHorizontal: 4,

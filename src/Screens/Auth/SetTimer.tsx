@@ -10,7 +10,6 @@ import React, {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {Timer} from '../../Redux/Action';
 
-
 const SetTimer = ({navigation}: any) => {
   const [timer, setTimer] = useState('');
 
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal:"20%",
+    marginHorizontal: '20%',
     fontFamily: 'regular',
     fontSize: 18,
     backgroundColor: '#40a420',

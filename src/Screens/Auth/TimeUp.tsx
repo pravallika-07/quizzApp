@@ -1,28 +1,57 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  TextInput,
-  Alert,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {RadioButton} from 'react-native-paper';
 import {useSelector} from 'react-redux';
 
-const TimeUp = () => {
+const TimeUp = (props: any) => {
   const [minutes, setMinutes] = useState(0);
-  const [checked, setChecked] = React.useState('first');
+  const [question, setQuestion] = useState('');
 
+  const [alphabets, setAlphabets] = useState('');
+  const array = [
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z',
+  ];
   const inputTime = useSelector((store: any) => store.timer);
   let number = +inputTime;
 
   const [seconds, setSeconds] = useState(number);
 
   var timer: any;
+
+  useEffect(() => {
+    setQuestion(props.route.params.data);
+    getAlphabets(array);
+  }, []);
+
   useEffect(() => {
     timer = setInterval(() => {
-      if (seconds > 0) setSeconds(seconds - 1);
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      }
 
       if (seconds === 59) {
         setMinutes(minutes - 1);
@@ -32,37 +61,29 @@ const TimeUp = () => {
 
     return () => clearInterval(timer);
   });
+
+  const getAlphabets = (array: any) => {
+    console.log('array', array);
+    let randomItem = array[Math.floor(Math.random() * array.length)];
+    setAlphabets(randomItem);
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.timeUp}>TimeUp</Text>
       <View style={styles.boxforquestion}>
-        <Text style={styles.question}>Props are immutable?</Text>
-        <View style={styles.boxforradio}>
-          <RadioButton
-            value="first"
-            status={checked === 'first' ? 'checked' : 'unchecked'}
-            onPress={() => setChecked('first')}
-          />
-          <Text style={styles.text}>True</Text>
-        </View>
-        <View style={styles.boxforradio}>
-          <RadioButton
-            value="second"
-            status={checked === 'second' ? 'checked' : 'unchecked'}
-            onPress={() => setChecked('second')}
-          />
-          <Text style={styles.text}>False</Text>
-        </View>
+        <Text style={styles.question}>{question.question}</Text>
       </View>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => console.log('inputTime')}>
-        <Text style={styles.buttonText}>A</Text>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>{alphabets}</Text>
       </TouchableOpacity>
       <View style={styles.counterBox}>
-        <Text style={styles.counterText}>
-          {minutes} : {seconds}
-        </Text>
+        {minutes == 0 && seconds == 0 ? (
+          <Text style={styles.counterText}>Time up</Text>
+        ) : (
+          <Text style={styles.counterText}>
+            {minutes} : {seconds}
+          </Text>
+        )}
       </View>
     </View>
   );
@@ -90,6 +111,7 @@ const styles = StyleSheet.create({
   },
   counterText: {
     color: '#000000',
+    fontSize: 20,
   },
   counterBox: {
     alignItems: 'center',
@@ -109,7 +131,8 @@ const styles = StyleSheet.create({
   },
   question: {
     color: '#000000',
-    marginHorizontal: 10,
+    marginHorizontal: '12%',
+    fontSize: 18,
   },
   boxforradio: {
     marginHorizontal: 4,
