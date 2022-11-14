@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 
 const TimeUp = (props: any) => {
-  const [minutes, setMinutes] = useState(0);
+ 
   const [question, setQuestion] = useState('');
 
   const [alphabets, setAlphabets] = useState('');
@@ -36,10 +36,14 @@ const TimeUp = (props: any) => {
     'Z',
   ];
   const inputTime = useSelector((store: any) => store.timer);
+  const inputMinute = useSelector((store: any) => store.min);
   let number = +inputTime;
+  let minute = +inputMinute;
 
   const [seconds, setSeconds] = useState(number);
+  const [minutes, setMinutes] = useState(minute);
 
+ 
   var timer: any;
 
   useEffect(() => {
@@ -51,16 +55,18 @@ const TimeUp = (props: any) => {
     timer = setInterval(() => {
       if (seconds > 0) {
         setSeconds(seconds - 1);
+        
       }
 
-      if (seconds === 59) {
+      if (seconds === 0) {
         setMinutes(minutes - 1);
-        setSeconds(0);
+        setSeconds(59);
       }
     }, 1000);
 
     return () => clearInterval(timer);
   });
+ 
 
   const getAlphabets = (array: any) => {
     console.log('array', array);

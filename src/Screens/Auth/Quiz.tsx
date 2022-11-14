@@ -1,6 +1,5 @@
 import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {RadioButton} from 'react-native-paper';
 import {data} from '../../utils/data';
 
 const Quiz = ({navigation}: any) => {
