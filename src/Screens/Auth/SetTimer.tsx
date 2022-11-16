@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
-import {Min, Timer} from '../../Redux/Action';
+import {Min, Timer} from '../../Store/Action';
 
 const SetTimer = ({navigation}: any) => {
   const [timer, setTimer] = useState('');

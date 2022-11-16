@@ -7,7 +7,8 @@ import SetTimer from './src/Screens/Auth/SetTimer';
 import Quiz from './src/Screens/Auth/Quiz';
 import TimeUp from './src/Screens/Auth/TimeUp';
 import {Provider} from 'react-redux';
-import Store from './src/Redux/Store';
+import Store from './src/Store/Store';
+import SignIn from './src/Screens/Auth/SignIn';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +18,8 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{headerShown: false}}
-          initialRouteName="Home">
+          initialRouteName="SignIn">
+           <Stack.Screen name="SignIn" component={SignIn} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="SetTimer" component={SetTimer} />
           <Stack.Screen name="Quiz" component={Quiz} />
